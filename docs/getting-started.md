@@ -59,8 +59,8 @@ it can't find out:
   commands, and runs them once on the base branch.
 - **Permissions.** It suggests a few allow rules for
   `.claude/settings.local.json` so runs don't stop for routine commands.
-- **Company skills.** In a Valhalla workspace it offers `fx skills on`.
-- **Health check.** It ends with `fx doctor` and fixes what it reports.
+- **Company skills.** In a Valhalla workspace it offers to turn them on.
+- **Health check.** It ends with a health check and fixes what it reports.
 
 In a single repo, setup also adds the factory's runtime folders to
 `.gitignore`.

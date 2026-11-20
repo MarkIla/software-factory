@@ -5,7 +5,12 @@ local spec file into a checked, reviewed and documented draft merge request.
 You shape the work and make the decisions; agents plan, build, check and
 document everything in between. Nothing merges without you.
 
-![The whole workflow, from your idea to shipped code](docs/images/workflow.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/overview-dark.svg">
+  <img alt="From idea to merged code: start from an idea, a Jira ticket, a GitHub issue or a spec file; shape it with /factory:vision, plan it, build it with /factory:run, merge it yourself, and ship its documentation with /factory:docs. You answer, approve and merge at every stage." src="docs/images/overview-light.svg">
+</picture>
+
+Step by step, with every agent and loop: [the detailed workflow](docs/images/workflow.png).
 
 ## Install
 

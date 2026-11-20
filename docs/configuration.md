@@ -26,7 +26,7 @@ built into `fx` (`DEFAULTS` in `plugins/factory/bin/fx`).
 | Branch | `ABC-123-feat/add-export` | `feat/spec-3-add-export` |
 | MR title | `ABC-123: Add export` | `Add export` |
 | Docs | `CHANGELOG.md`, ADRs in `docs/adr`, a Confluence space | `CHANGELOG.md`, ADRs in `docs/adr` |
-| Company skills | Valhalla preset, off until `fx skills on` | off |
+| Company skills | Valhalla preset, off until you turn it on | off |
 
 ## Trackers and forges
 
@@ -76,7 +76,7 @@ and so on), `{slug}` and `{title}`.
 | `docs.review` | `{"low": "haiku", "medium": "sonnet", "high": "sonnet"}` | Docs reviewer model by risk (features) |
 | `docs.review_hotfix` | `false` | Also review docs on hotfixes |
 | `max_agent_retries` | `1` | Retries when an agent's file is malformed |
-| `prices_usd_per_mtok` | `{}` | Per-model prices, for cost estimates in `fx status` |
+| `prices_usd_per_mtok` | `{}` | Per-model prices, for cost estimates in `/factory:run status` |
 
 ## Documentation and house style
 
@@ -134,18 +134,19 @@ them under `repos`. A job changes exactly one repo, and intake picks it.
 ## Company skills
 
 The `skills` section is optional and off by default. The `work` profile
-carries a Valhalla preset; `fx skills on` turns it on for one workspace.
+carries a Valhalla preset. `/factory:setup` offers to turn it on for one
+workspace, and `/factory:run` turns it on or off when you ask.
 
 | Key | Default | Meaning |
 | --- | --- | --- |
-| `skills.enabled` | `false` | Turned on and off with `fx skills on` and `off` |
+| `skills.enabled` | `false` | Turned on and off through `/factory:setup` or `/factory:run` (`fx skills on`/`off`) |
 | `skills.mode` | `discover` | Agents also look for other fitting installed skills |
 | `skills.enforce` | `true` | Agents must list the pinned skills they applied |
 | `skills.roles` | `{}` | Per role, names or glob patterns of skills it must apply, such as `"reviewer-code": ["val-standards-review"]` |
 | `skills.library` | Valhalla commands in `work` | `install`, `update`, `verify`, `outdated`, `lock_file` and `protected_paths` |
 | `skills.search_paths` | `[".claude/skills"]` | Where installed skills are found |
 
-`fx skills catalog` lists what's installed; pins that match nothing are
+Ask `/factory:run` what's installed (`fx skills catalog` underneath); pins that match nothing are
 skipped, and the next run re-resolves them when the lock file changes.
 
 ## The checks script

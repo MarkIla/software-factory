@@ -186,8 +186,8 @@ on a person, or a rejection.
    the repo from components or labels.
 2. **Intake** writes `intake.md`: accept, ask the reporter, or reject; then
    lane, risk, affected areas (UI, security, data) and repo. If it needs
-   answers, the job parks as `needs-info` until the reporter (or you, via
-   `fx answer`) replies.
+   answers, the job parks as `needs-info` until the reporter replies, or you
+   answer in `/factory:run`.
 3. **Lane.**
    - Hotfix goes straight to the builder.
    - Feature gets a `spec.md` first, unless it arrived with an approved one.
@@ -212,8 +212,8 @@ on a person, or a rejection.
 
 Each lane has a round limit (2 for hotfix, 3 for feature). When it's used up,
 or an agent reports `BLOCKED`, the job becomes `needs-human`, with the reason
-posted on the MR and the ticket. `fx feedback` gives the builder your notes and
-a fresh set of rounds.
+posted on the MR and the ticket. Telling `/factory:run` what to change gives
+the builder your notes and a fresh set of rounds.
 
 | Stage | Kind |
 | --- | --- |
@@ -241,7 +241,7 @@ reader, and `fx` carries on with the answers.
 ![Jira bridge: reads go through an agent; writes wait for your approval](images/jira-bridge.png)
 
 At the end of each `/factory:run` you see the pending writes in one table and
-approve all, some or none; `fx outbox` lists them any time. Two kinds hold up
+approve all, some or none; `/factory:run outbox` shows them any time. Two kinds hold up
 work until approved: a question to a reporter (the job starts waiting for a
 reply only once it's posted) and an epic's stories (created only after you
 approve them). The writer agent can post only the exact approved text, on the
@@ -290,8 +290,9 @@ because `fx` pushes and opens the MR.
 
 ## Company skills (Valhalla)
 
-The integration is off by default; `fx skills on` turns it on for one
-workspace, and `fx skills off` removes it again. When it's on:
+The integration is off by default. `/factory:setup` offers to turn it on for a
+Valhalla workspace, and `/factory:run` turns it on or off when you ask
+(`fx skills on` and `off` underneath). When it's on:
 
 - **Header lines.** Each prompt carries `Skills:` (the role's pinned skills,
   resolved against what's installed) and `Discover skills: yes`, so agents

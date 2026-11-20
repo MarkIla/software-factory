@@ -71,7 +71,8 @@ every behaviour change.
 | Change a default | `DEFAULTS` (or `PROFILES` for `work` and `personal`) in `bin/fx`, plus [Configuration](configuration.md) |
 | Change what an agent does | Its `agents/<role>.md`; keep its output format in step with what `fx` parses |
 | Change a slash command | `skills/<name>/SKILL.md` |
-| Change a diagram | The diagrams come from the "Software Factory: Architecture and How It Works" Claude Doc; edit them there and export new PNGs into `docs/images/` |
+| Change the README overview | Edit the stages and text in `docs/images/make-overview.py` and run it; it writes `overview-light.svg` and `overview-dark.svg` |
+| Change a detailed diagram | The PNGs come from the "Software Factory: Architecture and How It Works" Claude Doc; edit them there and export new PNGs into `docs/images/` |
 
 ## Release a version
 
