@@ -1,56 +1,51 @@
-# Software factory marketplace
+# Software factory
 
-A one-plugin Claude Code marketplace for the **software factory**: issues and
-specs in, checked and reviewed draft merge requests out, documentation
-included. Nothing merges without a person.
+A Claude Code plugin that turns an idea, a Jira ticket, a GitHub issue or a
+local spec file into a checked, reviewed and documented draft merge request.
+You shape the work and make the decisions; agents plan, build, check and
+document everything in between. Nothing merges without you.
 
-Install it once per machine; every repo and workspace then has
-`/factory:setup`, `/factory:vision`, `/factory:run` and `/factory:docs`, with
-`fx` on the PATH inside Claude Code.
+![The whole workflow, from your idea to shipped code](docs/images/workflow.png)
 
 ## Install
 
-1. Put this folder somewhere Claude Code can read it: a git repository
-   (GitLab or GitHub, private is fine) or a local folder.
-2. Add the marketplace and install the plugin, from a terminal:
+```
+claude plugin marketplace add MarkIla/software-factory
+claude plugin install factory@software-factory
+```
 
-   ```
-   claude plugin marketplace add <git URL, owner/repo, or path to this folder>
-   claude plugin install factory@software-factory
-   ```
+For a private repository, git must be able to read it without prompting:
+`gh auth login && gh auth setup-git` does that for GitHub. Then, in each repo
+or multi-repo workspace, open Claude Code and run `/factory:setup`.
 
-   or inside Claude Code with `/plugin`.
-3. Requirements on the machine: Python 3.9+, git 2.38+, and `glab` (GitLab) or
-   `gh` (GitHub) logged in for the projects that use them. Jira at work goes
-   through the Atlassian MCP, so no Jira token is needed.
-4. In each project, open Claude Code in the repo (or the workspace folder that
-   holds several repos) and run `/factory:setup`.
+You need Claude Code, Python 3.9+, git 2.38+, and `glab` or `gh` logged in.
+For Jira at work, connect the Atlassian MCP; no Jira token is needed.
+
+## Use
+
+| Command | What it does |
+| --- | --- |
+| `/factory:setup` | Sets up a repo or workspace: config, checks, permissions, health check |
+| `/factory:vision` | Turns an idea into reviewed specs, has the planner plan the whole build for your approval, then queues it |
+| `/factory:run` | Works the queue: intake, spec, build, checks, reviews, docs, ready merge requests; then asks you to approve its Jira writes |
+| `/factory:docs` | Publishes the documentation drafts of merged work |
+
+## Documentation
+
+| Page | Covers |
+| --- | --- |
+| [Getting started](docs/getting-started.md) | Installing, setting up a project, your first piece of work, troubleshooting |
+| [How it works](docs/how-it-works.md) | The parts, a job's life, the central plan, the Jira bridge, documentation, safety |
+| [Commands](docs/commands.md) | Every slash command and `fx` command |
+| [Configuration](docs/configuration.md) | `factory/config.json`, profiles, workspaces, the checks script |
+| [Development](docs/development.md) | Layout, tests, changing the plugin, releasing a version |
 
 ## Update
-
-Edit the plugin here, bump `version` in `plugins/factory/.claude-plugin/plugin.json`
-(other machines only pick up a new version string), push, then on each machine:
 
 ```
 claude plugin marketplace update software-factory
 claude plugin update factory@software-factory
 ```
 
-Project state (`factory/config.json`, checks, jobs, briefs, specs) lives in
-each project and is untouched by updates.
-
-## Layout
-
-```
-.claude-plugin/marketplace.json
-plugins/factory/
-  .claude-plugin/plugin.json
-  bin/fx            the state machine (Python, stdlib only); on the PATH
-  bin/fx-guard      fast PreToolUse hook entry
-  hooks/hooks.json  the guard for factory agents
-  skills/           run, vision, setup, docs  ->  /factory:<name>
-  agents/           intake, planner, spec-writer, builder, reviewers, docs, Jira bridge
-  tests/            python3 -m unittest discover -s tests   (from plugins/factory)
-```
-
-See `plugins/factory/README.md` for how it works.
+Or turn on auto-update once under `/plugin` → Marketplaces. Each project's
+`factory/` folder (config, checks, jobs, specs) is untouched by updates.
