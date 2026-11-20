@@ -20,7 +20,9 @@ reaches Jira until you approve it, and nothing merges until you merge it.
 ![Architecture: Claude judges, fx decides, files carry the state](images/architecture.png)
 
 **You** shape the work with `/factory:vision`, start runs with
-`/factory:run`, approve plans and Jira writes, and merge.
+`/factory:run`, approve plans and Jira writes, and merge. The skills run `fx`
+for you, ask you only for decisions, and end each step by telling you what
+comes next.
 
 **The orchestrator** is your Claude Code session after you type
 `/factory:run`, driven by the plugin's `run` skill. It makes no decisions: it
@@ -128,6 +130,14 @@ documentation plan, before anything reaches the queue.
 7. **File.** You choose where it goes: the local spec queue or GitHub issues
    on personal projects, Jira at work, or nowhere yet.
 
+**From an existing ticket:** `/factory:vision SSP-123` (or `GH-12`, `SPEC-3`)
+starts the brief from that ticket. `fx ticket` reads it through the project's
+tracker (at work, the Jira reader agent) and copies it into `ticket.md` as
+quoted data, with only the reporter's and your comments. The brief starts from
+the ticket and moves straight to questions about its gaps. Filing then goes
+onto that ticket instead of a new one. The skill runs every `fx` command
+itself; you only make the decisions.
+
 Briefs live in files, so you can `/clear` and pick up again with
 `/factory:vision <name>`.
 
@@ -146,13 +156,19 @@ before a single ticket exists.
 - **Documentation:** the feature-level documents, such as an overview or tech
   spec, written once all the stories have merged.
 
-`fx plan SLUG --approve` approves it, and `--redo` sends it back with your
-notes. `fx plan SLUG --file` then files the epic and every story in order,
+`/factory:vision` shows you the plan and asks: approve it, or send it back
+with your notes (`fx plan SLUG --approve` or `--redo` underneath). Once you
+choose where it goes, it files the epic and every story in order,
 each with its reviewed spec and dependencies. On Jira the epic goes through
 your approval first, then all its stories in one batch; a story whose
 dependency isn't created yet stays blocked until it is. If you create the
-tickets with your own ticket skill instead, `fx plan SLUG --link` attaches
-them to the plan.
+tickets with your own ticket skill instead, the skill attaches them to the
+plan (`fx plan SLUG --link`).
+
+A brief started from a ticket files onto it. With one story, the reviewed spec
+is attached to the ticket and the ticket gets the queue label. With several,
+the ticket becomes the epic and every story is filed under it; the queue holds
+an epic like that and never builds it itself.
 
 A ticket filed from a reviewed spec skips the spec-writer: the factory builds
 from the approved copy in `factory/specs/<KEY>.md`, not from ticket text,

@@ -25,8 +25,8 @@ writes, the merge, and each published document.
 
 - **Install once per machine**, then run `/factory:setup` once per repo or
   multi-repo workspace.
-- **`/factory:vision`** turns a rambling idea into reviewed specs with a
-  documentation plan.
+- **`/factory:vision`** turns a rambling idea, or an existing ticket, into
+  reviewed specs with a documentation plan.
 - **The central plan:** the planner (Opus) plans the whole build once, in
   waves, and you approve it before a single ticket exists.
 - **`/factory:run`** works the queue: intake, spec, build, checks, reviews,

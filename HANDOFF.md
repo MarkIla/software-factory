@@ -6,9 +6,14 @@ empty.
 
 ## Where things stand
 
-- **Version 2.1.0** is in this repo (`MarkIla/software-factory`): the plugin,
+- **Version 2.2.0** is in this repo (`MarkIla/software-factory`): the plugin,
   the central plan step, the Jira bridge and outbox, the docs pipeline, and
-  the docs in `docs/`.
+  the docs in `docs/`. 2.2.0 adds `/factory:vision KEY`: a brief that starts
+  from an existing ticket (`fx ticket`) and files onto it. Every skill now
+  runs fx itself and ends with a **Next** step for the owner.
+- **First dry run done (20 November):** the owner ran the sandbox end to end
+  on the `personal` profile (vision, plan, run, merged pull request) and
+  reports it worked as expected.
 - **Installed on the owner's Mac** on 20 November from this folder
   (`~/.local/share/claude-plugins/factory-marketplace`) as a local
   marketplace. It wasn't installed before that, despite an earlier note. The
@@ -25,15 +30,15 @@ empty.
 
 ## Verified so far
 
-- 79 unit tests pass on macOS (Python 3.13); `claude plugin validate` passes for the plugin and the
+- 88 unit tests pass on macOS (Python 3.13); `claude plugin validate` passes for the plugin and the
   marketplace.
 - `claude plugin install` from a local marketplace works; `fx` and `fx-guard`
   run on the Mac.
 
 ## Not yet verified live
 
-Nothing has run with real agents, a real Jira or a real GitLab yet. Check
-these first, in this order:
+Only the sandbox dry run has used real agents; nothing has run against a
+real Jira or GitLab yet. Check these first, in this order:
 
 1. **The guard hook sees `agent_type`.** The guard relies on PreToolUse hook
    input carrying `agent_type` (`factory:builder` and so on) for plugin
@@ -54,6 +59,9 @@ these first, in this order:
    MR, notes, ready, merge detection.
 6. **The docs writer and `/factory:docs`** with the real `atlassian-work`
    skill.
+7. **`/factory:vision KEY`** with a real Jira ticket (the reader trip from
+   `fx ticket`) and a GitHub issue, then filing onto it: one story (spec
+   attached, queue label approved) and several (ticket as the epic).
 
 ## Open questions for the owner
 

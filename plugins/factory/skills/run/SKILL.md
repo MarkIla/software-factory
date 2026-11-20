@@ -18,6 +18,22 @@ GitLab yourself, and you never merge. Every merge is a human's decision.
 opened: the repo, or the workspace that holds several repos. If fx says there
 is no factory here, offer `/factory:setup`.
 
+## You run fx; the user decides
+
+The factory guides the user's workflow. They type slash commands and answer
+questions; they never need `fx`.
+
+- Run every `fx` command yourself. Never ask the user to type one, and don't
+  show fx commands as instructions to them.
+- fx output names follow-up commands (`fx release KEY`, `fx outbox`,
+  `fx plan SLUG --file`, `fx feedback KEY`). Those are for you: turn each into
+  a short question (AskUserQuestion when you can name the options) and run it
+  on their yes.
+- Finish every turn that leaves work open with **Next**: the one or two things
+  that move the work forward, in order, as a decision to make, a merge request
+  to review (with its link) or a slash command (`/factory:vision`,
+  `/factory:run`, `/factory:docs`).
+
 Arguments: $ARGUMENTS
 
 ## Commands
@@ -108,10 +124,17 @@ PROMPT Job: ABC-123. Job folder: … Round: 2. …
      and pass on any failure (`fx outbox retry ID` retries).
    - Approving a question to a reporter or an epic's stories unblocks those
      jobs: run `fx queue` once more afterwards.
-3. List what waits on the user: merge requests ready for review, jobs needing
-   a human (with the reason), questions waiting on reporters, epic plans and
-   central plans waiting for approval (`fx plan`), and documentation drafts
-   ready to publish (`fx docs`, then suggest `/factory:docs`).
+3. List what waits on the user: merge requests ready for review (with links),
+   jobs needing a human (with the reason), questions waiting on reporters,
+   epic plans and central plans waiting for approval (`fx plan`), held tickets,
+   and documentation drafts ready to publish (`fx docs`).
+4. End with **Next**, in this order of priority: answer a question a job is
+   blocked on; review and merge the ready merge requests (the next
+   `/factory:run` notices merges by itself, so no run is needed just for
+   that); approve a waiting plan; release held tickets (ask, then
+   `fx release`); `/factory:docs` for drafts ready to publish; otherwise
+   `/factory:vision` for the next piece of work. Offer the decisions as
+   questions and run the fx command on a yes.
 
 ## Talking to the factory
 
@@ -124,7 +147,8 @@ which job they mean, ask.
 | gives feedback on a ready, needs-human or plan-review job | `fx feedback KEY <<'EOF'` + their words verbatim + `EOF`, then step it |
 | answers a reporter question (needs-info) | `fx answer KEY <<'EOF'` … `EOF` (it may print a writer spawn: run it), then step it |
 | approves an epic plan | `fx approve-plan KEY`; with Jira approvals on, the stories wait in the outbox: show them for approval now |
-| asks about a central plan from /factory:vision | `fx plan` lists them, `fx plan SLUG` shows one; approving and filing it belongs to `/factory:vision SLUG` |
+| asks about a central plan from /factory:vision | `fx plan` lists them, `fx plan SLUG` shows one; to approve or file it, continue with `/factory:vision SLUG` |
+| asks to work on an existing ticket that needs shaping first | suggest `/factory:vision KEY`: it reads the ticket, asks about the gaps and files the reviewed spec onto it |
 | drops a job | `fx reject KEY <<'EOF'` + reason + `EOF` |
 | asks for new work | suggest `/factory:vision` to shape it into a reviewed spec; for a one-liner, `fx file --title "<short imperative title>" <<'EOF'` + description + `EOF`, then `fx queue` |
 | releases held tickets | `fx release KEY …`, then `fx queue` |

@@ -7,7 +7,7 @@ plan and every Jira write, and you do the merging.
 | Command | What it does |
 | --- | --- |
 | `/factory:setup` | Sets up the factory in this repo or multi-repo workspace |
-| `/factory:vision` | Turns an idea into reviewed specs and a central plan you approve, then queues it |
+| `/factory:vision` | Turns an idea or an existing ticket into reviewed specs and a central plan you approve, then queues it |
 | `/factory:run` | Works the queue and ends by asking you to approve its Jira writes |
 | `/factory:docs` | Publishes documentation drafts once their merge requests have merged |
 

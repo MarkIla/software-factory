@@ -1,7 +1,9 @@
 # Commands
 
-You mostly use the four slash commands. `fx` is the script underneath them;
-you can call it directly for status, approvals and fixes. Inside Claude Code
+You only need the four slash commands. They run `fx`, the script underneath,
+for you: you answer questions and make decisions, and each command ends by
+telling you what comes next. The `fx` tables below are a reference for when you
+want to look underneath or debug. Inside Claude Code
 it is on your PATH; elsewhere call it by path (the plugin's `bin/fx`), with
 `--home <project>` when you're not inside the project.
 
@@ -19,6 +21,7 @@ it is on your PATH; elsewhere call it by path (the plugin's `bin/fx`), with
 | --- | --- |
 | `/factory:setup [work\|personal]` | Sets up the factory in this repo or workspace: config, checks, permissions, health check. Also repairs an existing setup |
 | `/factory:vision [name\|list]` | Starts or resumes a brief: turns an idea into reviewed specs, has the planner plan the build for your approval, then files it |
+| `/factory:vision KEY` | Starts a brief from an existing ticket (`SSP-123`, `GH-12`, `SPEC-3`) and files the reviewed specs onto it |
 | `/factory:run` | Works the queue until nothing more can run, then asks you to approve its Jira writes |
 | `/factory:run KEY` | Runs one ticket (`ABC-123`, `GH-12`, `SPEC-3`) |
 | `/factory:run status [KEY]` | Shows every job, or one job in detail |
@@ -43,8 +46,9 @@ it is on your PATH; elsewhere call it by path (the plugin's `bin/fx`), with
 | `fx plan SLUG` | Spawns the planner on the brief, or prints its plan: waves, collision warnings, documentation count |
 | `fx plan SLUG --approve` | Approves the plan as written |
 | `fx plan SLUG --redo` | Rejects the plan; your notes on stdin go to the planner |
-| `fx plan SLUG --file [--to local\|github\|jira] [--hold]` | Files the approved plan: the epic (held), then every story with its spec and dependencies. Run it again after approving queued Jira creates |
+| `fx plan SLUG --file [--to local\|github\|jira] [--hold]` | Files the approved plan: the epic (held), then every story with its spec and dependencies. Run it again after approving queued Jira creates. A brief tied to a ticket files onto it: one story attaches its spec to the ticket, several are filed under the ticket as their epic |
 | `fx plan SLUG --link N=KEY --link epic=KEY` | Attaches tickets you created elsewhere (for example with your ticket skill) to plan stories, numbered from 1 |
+| `fx ticket KEY [--brief NAME]` | Copies an existing ticket into a brief (`ticket.md`, quoted as data) and ties the brief to it, so `fx plan NAME --file` files onto that ticket. `/factory:vision KEY` runs it for you |
 | `fx file --title T [--spec FILE] [--to …] [--hold] [--repo R] [--parent KEY] [--issue-type TYPE] [--after KEY,KEY]` | Files one piece of work. With `--spec`, the reviewed spec rides along and the factory builds from it; without it, the description comes from stdin |
 | `fx adopt KEY [--spec FILE] [--queue] [--after KEY,KEY] [--docs-plan FILE --children KEY,KEY]` | Attaches an approved spec, dependencies or an epic's documentation plan to a ticket made elsewhere |
 | `fx release KEY …` | Adds the queue label to held tickets so the next run picks them up |

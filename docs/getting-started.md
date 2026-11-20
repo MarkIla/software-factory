@@ -2,7 +2,8 @@
 
 This page takes you from nothing installed to your first merged change.
 Install the plugin once per machine, set up each project once, then use the
-same few commands everywhere.
+same few commands everywhere. Each one asks you only for decisions and ends by
+telling you what comes next; you never need to run the `fx` script yourself.
 
 ## 1. Check the machine
 
@@ -79,6 +80,12 @@ anything bigger than one merge request into stories. It writes the specs into
 documents the change needs. Read and edit them; nothing is filed until you
 choose.
 
+If the work already has a ticket, start from it instead:
+`/factory:vision SSP-123` (or `GH-12`, or a local `SPEC-3`). It reads the
+ticket, plays it back, asks about what's missing, and files the reviewed spec
+onto that ticket rather than creating a new one. You never need to type an
+`fx` command; the skill runs them and asks you only for decisions.
+
 ### Approve the central plan
 
 Still inside `/factory:vision`, the planner (Opus, in its own context) plans
@@ -128,14 +135,16 @@ small docs change in the repo (personal projects).
 | You want to | Do this |
 | --- | --- |
 | Turn an idea into work | `/factory:vision` |
+| Shape an existing ticket | `/factory:vision SSP-123` |
 | Build what's queued | `/factory:run` |
 | Build one ticket | `/factory:run ABC-123` |
+| Close out merged work | Nothing: every `/factory:run` checks for merges first, so a run just for that isn't needed |
 | See where things are | `/factory:run status`, or `/factory:run status ABC-123` |
 | Give feedback on a merge request | `/factory:run` and say what to change; it starts a new round |
 | Answer a question the factory asked | `/factory:run` and give the answer |
 | Approve pending Jira writes | `/factory:run outbox` |
 | Publish documentation | `/factory:docs` |
-| Check the setup | `fx doctor` |
+| Check the setup | `/factory:setup` (on a set-up project it runs a check-up) |
 
 ## Update the plugin
 
@@ -162,9 +171,9 @@ briefs and specs, offers to switch Jira to the MCP, and offers to delete
 | --- | --- |
 | `Path does not exist` when adding the marketplace | The path is wrong. Use `~/…` or the full path to the folder holding `.claude-plugin/marketplace.json`, not your project |
 | `/factory:…` commands don't appear | Start a new Claude Code session after installing; check `claude plugin list` |
-| `fx: no factory/config.json` | Run `/factory:setup` in the repo or workspace first |
+| "No factory here" | Run `/factory:setup` in the repo or workspace first |
 | The run keeps asking for a Jira sync | The Atlassian MCP isn't connected in this session; check `/mcp` |
-| A Jira write failed | `fx outbox` shows it as failed; `fx outbox retry ID` retries it |
-| A job stopped with `needs-human` | `fx status KEY` gives the reason; give feedback with `/factory:run`, fix it yourself, or drop it |
-| The gate fails with `checks.sh is not configured yet` | Put the real commands in `factory/checks.sh` and remove the `FX-UNCONFIGURED` line |
+| A Jira write failed | `/factory:run outbox` shows it and offers a retry |
+| A job stopped with `needs-human` | `/factory:run status KEY` gives the reason; give feedback with `/factory:run`, fix it yourself, or drop it |
+| The gate fails with `checks.sh is not configured yet` | Run `/factory:setup` to write the real checks, or put the commands in `factory/checks.sh` and remove the `FX-UNCONFIGURED` line |
 | Pushing the plugin repo is rejected (non-fast-forward) | The remote has commits you don't: `git pull origin main --allow-unrelated-histories --no-rebase`, then push |

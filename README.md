@@ -26,7 +26,7 @@ For Jira at work, connect the Atlassian MCP; no Jira token is needed.
 | Command | What it does |
 | --- | --- |
 | `/factory:setup` | Sets up a repo or workspace: config, checks, permissions, health check |
-| `/factory:vision` | Turns an idea into reviewed specs, has the planner plan the whole build for your approval, then queues it |
+| `/factory:vision` | Turns an idea or an existing ticket into reviewed specs, has the planner plan the whole build for your approval, then queues it |
 | `/factory:run` | Works the queue: intake, spec, build, checks, reviews, docs, ready merge requests; then asks you to approve its Jira writes |
 | `/factory:docs` | Publishes the documentation drafts of merged work |
 

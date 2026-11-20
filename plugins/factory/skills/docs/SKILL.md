@@ -17,6 +17,22 @@ Arguments: $ARGUMENTS
 
 `fx` is on your PATH. Run it from the factory's home.
 
+## You run fx; the user decides
+
+The factory guides the user's workflow. They type slash commands and answer
+questions; they never need `fx`.
+
+- Run every `fx` command yourself. Never ask the user to type one, and don't
+  show fx commands as instructions to them.
+- fx output names follow-up commands (`fx release KEY`, `fx outbox`,
+  `fx plan SLUG --file`, `fx feedback KEY`). Those are for you: turn each into
+  a short question (AskUserQuestion when you can name the options) and run it
+  on their yes.
+- Finish every turn that leaves work open with **Next**: the one or two things
+  that move the work forward, in order, as a decision to make, a merge request
+  to review (with its link) or a slash command (`/factory:vision`,
+  `/factory:run`, `/factory:docs`).
+
 ## 1. See what's waiting
 
 Run `fx docs` (limit to a KEY if one was given). It lists:
@@ -69,8 +85,10 @@ and say where it was meant to go.
 
 After each published document, record it so it stops showing up:
 `fx docs done KEY <file name> --url <page URL>`. With Jira approvals on, this
-also queues a short Implementation update on the ticket: approve it with the
-others (`fx outbox`).
+also queues a short Implementation update on the ticket. Before you finish,
+run `fx outbox`, show the pending writes in one compact table and ask for
+approval, as `/factory:run` does at the end of a run (`fx outbox approve`,
+then spawn any `factory:tracker-write` pair it prints in the foreground).
 
 ## 4. Epic documents
 

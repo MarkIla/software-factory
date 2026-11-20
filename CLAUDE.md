@@ -9,6 +9,9 @@ Where the last session left off: `HANDOFF.md`.
 ## The owner's decisions (don't change without asking)
 
 - Never auto-merge. A person merges every merge request.
+- The plugin guides the owner's workflow. The owner types slash commands and
+  makes decisions; skills run every `fx` command, turn fx's hints into
+  questions, and end with what comes next. Never ask the owner to run `fx`.
 - Models: builder Sonnet; planner and spec-writer Opus; Jira reader and writer
   Haiku; reviewers scale with risk.
 - Work: Jira only through the Atlassian MCP (no API tokens on the machine),
@@ -47,11 +50,15 @@ Where the last session left off: `HANDOFF.md`.
   `--approve`, `--redo`, `--file` (resumable; dependencies in
   `factory/specs/deps.json`, with `plan:<slug>#N` placeholders until a key
   exists), `--link`.
+- Briefs from a ticket: `fx ticket KEY --brief SLUG` copies the ticket into
+  `ticket.md` (quoted as data) and records it in the brief's `plan.json`.
+  `fx plan SLUG --file` then files onto it: one story attaches the spec, several
+  make it the epic. The queue holds any key with `specs/<KEY>.epic.json`.
 
 ## Commands
 
 ```
-cd plugins/factory && python3 -m unittest discover -s tests    # 79 tests, ~60 s on macOS
+cd plugins/factory && python3 -m unittest discover -s tests    # 88 tests, ~70 s on macOS
 claude plugin validate plugins/factory && claude plugin validate .
 ```
 

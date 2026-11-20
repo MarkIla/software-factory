@@ -1,6 +1,6 @@
 {
   "name": "factory",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A local software factory: issues and specs in, reviewed draft merge requests out. Jira (via the Atlassian MCP), GitHub issues or local spec files; GitLab or GitHub; never merges.",
   "author": {
     "name": "Mark Adrian Jan Ila"

@@ -16,6 +16,22 @@ Arguments: $ARGUMENTS
 
 `fx` is on your PATH (the plugin's `bin/`).
 
+## You run fx; the user decides
+
+The factory guides the user's workflow. They type slash commands and answer
+questions; they never need `fx`.
+
+- Run every `fx` command yourself. Never ask the user to type one, and don't
+  show fx commands as instructions to them.
+- fx output names follow-up commands (`fx release KEY`, `fx outbox`,
+  `fx plan SLUG --file`, `fx feedback KEY`). Those are for you: turn each into
+  a short question (AskUserQuestion when you can name the options) and run it
+  on their yes.
+- Finish every turn that leaves work open with **Next**: the one or two things
+  that move the work forward, in order, as a decision to make, a merge request
+  to review (with its link) or a slash command (`/factory:vision`,
+  `/factory:run`, `/factory:docs`).
+
 ## 1. Look around (no questions yet)
 
 - `fx where`: if a factory home already exists here, this is a check-up: skip
@@ -124,5 +140,6 @@ If step 1 found the zip install, offer to delete `factory/bin/fx`,
 ## 8. Finish
 
 Run `fx doctor` and fix every FAIL you can. Then tell the user in two or three
-lines what's set up and how to start: `/factory:vision` to shape work,
-`/factory:run` to build the queue, `/factory:docs` to publish documentation.
+lines what's set up, and end with **Next**: `/factory:vision` to shape new
+work, `/factory:vision KEY` to start from an existing ticket, `/factory:run`
+to build what's queued. `/factory:docs` comes later, once work has merged.
