@@ -318,7 +318,7 @@ class TestLocalQueue(FactoryCase):
 class TestMultiTracker(unittest.TestCase):
     def test_routes_by_key_prefix(self):
         import tempfile
-        home = Path(tempfile.mkdtemp())
+        home = Path(tempfile.mkdtemp()).resolve()
         cfg = fx.deep_merge(fx.DEFAULTS, {})
         local = fx.LocalTracker(cfg, home)
         gh = FakeTracker()

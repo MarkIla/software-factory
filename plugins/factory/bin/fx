@@ -1232,8 +1232,8 @@ def init_home() -> Path:
 
 class Fx:
     def __init__(self, root: Path):
-        self.root = root
-        self.factory = root / "factory"
+        self.root = Path(root).resolve()  # one form everywhere (macOS /var is a link to /private/var)
+        self.factory = self.root / "factory"
         self.jobs = self.factory / "jobs"
         self.cfg_path = self.factory / "config.json"
         raw = json.loads(self.cfg_path.read_text()) if self.cfg_path.exists() else {}

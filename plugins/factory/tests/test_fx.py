@@ -141,7 +141,7 @@ echo "all good"
 
 class FactoryCase(unittest.TestCase):
     def setUp(self):
-        self.tmp = Path(tempfile.mkdtemp())
+        self.tmp = Path(tempfile.mkdtemp()).resolve()
         self.origin = self.tmp / "origin.git"
         run("git", "init", "--quiet", "--bare", "-b", "main", str(self.origin), cwd=self.tmp)
         self.root = self.tmp / "repo"
@@ -228,6 +228,19 @@ class FactoryCase(unittest.TestCase):
 
 
 class TestHappyPaths(FactoryCase):
+    def test_prompt_paths_use_the_real_path_when_home_is_a_symlink(self):
+        link = self.tmp / "link"
+        link.symlink_to(self.root)
+        k = self.start()
+        self.step(k)
+        self.intake(k, lane="hotfix")
+        f = fx.Fx(link)
+        self.assertEqual(f.root, self.root)
+        out = "\n".join(f.log + f.step(k))
+        self.assertIn(f"Job folder: {self.jd(k)}/.", out)
+        self.assertIn(f"Main checkout: {self.root}.", out)
+        self.assertNotIn(str(link), out)
+
     def test_feature_lane_end_to_end(self):
         k = self.start()
         self.assertIn("AGENT factory:intake | model=sonnet", "\n".join(self.step(k)))
@@ -916,7 +929,7 @@ class TestWorkspace(unittest.TestCase):
     """A Valhalla-style workspace: a plain folder holding several repos, the factory at its root."""
 
     def setUp(self):
-        self.tmp = Path(tempfile.mkdtemp())
+        self.tmp = Path(tempfile.mkdtemp()).resolve()
         self.ws = self.tmp / "ssp"
         self.ws.mkdir()
         for name in ("backend", "frontend"):
