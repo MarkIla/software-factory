@@ -9,9 +9,14 @@ empty.
 - **Version 2.1.0** is in this repo (`MarkIla/software-factory`): the plugin,
   the central plan step, the Jira bridge and outbox, the docs pipeline, and
   the docs in `docs/`.
-- **Installed on the owner's Mac** from this folder
-  (`~/.local/share/claude-plugins/factory-marketplace`), added as a local
-  marketplace, so edits here apply in the next session.
+- **Installed on the owner's Mac** on 20 November from this folder
+  (`~/.local/share/claude-plugins/factory-marketplace`) as a local
+  marketplace. It wasn't installed before that, despite an earlier note. The
+  install is a copy: after editing the plugin, uninstall and install it again
+  (see CLAUDE.md).
+- **Sandbox for dry runs:** `~/Documents/factory-sandbox`, a tiny Python task
+  list on the `personal` profile, pushed to the private repo
+  `MarkIla/factory-sandbox`. `fx doctor --checks` passes there.
 - **Design doc with the diagrams:** "Software Factory: Architecture and How It
   Works", https://claude.ai/artifact/XsBoufz92otjPrjVZgYxEi. The PNGs in
   `docs/images/` are screenshots of its diagrams.

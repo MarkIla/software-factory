@@ -36,9 +36,18 @@ claude plugin marketplace add <path to your clone>
 claude plugin install factory@software-factory
 ```
 
-Claude Code then reads the plugin straight from your clone, so edits take
-effect in the next session, or after `/reload-plugins` in a running one, with
-no version bump.
+Claude Code copies the plugin folder as it is on disk, uncommitted edits
+included, into `~/.claude/plugins/cache/`, and sessions use that copy. To
+apply your edits, reinstall and start a new session:
+
+```
+claude plugin uninstall factory@software-factory
+claude plugin install factory@software-factory
+```
+
+`claude plugin update` doesn't help here: it does nothing until the version
+changes. To try edits in one terminal session without reinstalling, start it
+with `claude --plugin-dir <path to your clone>/plugins/factory`.
 
 ## Test
 

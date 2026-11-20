@@ -67,9 +67,15 @@ Release: bump `version` in `plugins/factory/.claude-plugin/plugin.json` and
   (a linked worktree maps back to its main checkout).
 - Plugin agents are shared by every project, so per-project skill pins travel
   in the prompt header (`Skills:` line), not in agent frontmatter.
-- A marketplace added from a local folder loads the plugin in place: edits
-  apply in the next session or after `/reload-plugins`. Installs from git only
-  update when `plugin.json`'s version changes.
+- Installing from a local-folder marketplace copies the plugin folder as it
+  is on disk, uncommitted edits included, into `~/.claude/plugins/cache/`.
+  Sessions use that copy, not this folder. `claude plugin update` does nothing
+  while the version is unchanged, so to apply edits run `claude plugin
+  uninstall factory@software-factory` and `claude plugin install
+  factory@software-factory`, then start a new session. `claude --plugin-dir
+  plugins/factory` loads the folder in place for one terminal session.
+  Installs from git also update only when `plugin.json`'s version changes.
+  (Checked on Claude Code 2.1.152.)
 - claude.ai organization plugin sync rejects a top-level `bin/` folder.
 - Commands that take a file argument must not also read stdin: `fx file
   --spec` once hung on an open stdin pipe.

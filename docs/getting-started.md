@@ -28,9 +28,9 @@ repository, git must be able to read it without asking for a password first:
 `gh auth login` followed by `gh auth setup-git` does that for GitHub.
 
 You can also install from a local folder, such as a clone you are editing:
-`claude plugin marketplace add <path to the folder>`. Claude Code then reads
-the plugin straight from that folder, so your edits take effect in the next
-session.
+`claude plugin marketplace add <path to the folder>`. Claude Code installs a
+copy of the plugin, so later edits in the folder don't reach your sessions
+until you reinstall it. See [Development](development.md#work-on-it-locally).
 
 Everything in a project's `factory/` folder belongs to that project.
 Updating or reinstalling the plugin never touches it.
