@@ -1,0 +1,16 @@
+{
+  "name": "software-factory",
+  "owner": {
+    "name": "YOUR-NAME"
+  },
+  "metadata": {
+    "description": "Personal marketplace for the software factory plugin."
+  },
+  "plugins": [
+    {
+      "name": "factory",
+      "source": "./plugins/factory",
+      "description": "Issues and specs in, reviewed draft merge requests out. /factory:vision, /factory:run, /factory:docs, /factory:setup."
+    }
+  ]
+}

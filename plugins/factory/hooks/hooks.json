@@ -1,0 +1,13 @@
+{
+  "description": "Software factory guard: limits what factory agents (factory:*) may run, write and post. Other sessions and agents pass through untouched.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Write|Edit|MultiEdit|NotebookEdit|mcp__.*",
+        "hooks": [
+          {"type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/bin/fx-guard", "timeout": 20}
+        ]
+      }
+    ]
+  }
+}
